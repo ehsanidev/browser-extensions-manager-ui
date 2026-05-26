@@ -1,0 +1,273 @@
+@import url("https://fonts.googleapis.com/css2?family=Bai+Jamjuree:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,200;1,300;1,400;1,500;1,600;1,700&family=Barlow+Semi+Condensed:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Figtree:ital,wght@0,300..900;1,300..900&family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&family=Hanken+Grotesk:ital,wght@0,100..900;1,100..900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Lexend+Deca:wght@100..900&family=Manrope:wght@200..800&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Outfit:wght@100..900&family=Overpass:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100..900;1,100..900&family=Red+Hat+Display:ital,wght@0,300..900;1,300..900&family=Young+Serif&display=swap");
+
+/* Variables */
+:root {
+  --Neutral-900: hsl(227, 75%, 14%);
+  --Neutral-800: hsl(226, 25%, 17%);
+  --Neutral-700: hsl(225, 23%, 24%);
+  --Neutral-600: hsl(226, 11%, 37%);
+  --Neutral-300: hsl(0, 0%, 78%);
+  --Neutral-200: hsl(217, 61%, 90%);
+  --Neutral-100: hsl(0, 0%, 93%);
+  --Neutral-0: hsl(200, 60%, 99%);
+  --Red-400: hsl(3, 86%, 64%);
+  --Red-500: hsl(3, 71%, 56%);
+  --Red-700: hsl(3, 77%, 44%);
+  --Light-Gradient: linear-gradient(180deg, #ebf2fc 0%, #eef8f9 100%); 
+  --Dark-Gradient: linear-gradient(180deg, #040918 0%, #091540 100%);
+}
+
+/* Reset */
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  transition: background-image 0.3s ease, color 0.3s ease;
+}
+
+/* Body */
+body {
+  font-family: "Noto Sans", sans-serif;
+  background-image: var(--background-image);
+  font-size: 16px;
+  padding: 2em 0.5em 5em;
+  min-height: 100vh;
+}
+
+/* Dark Mode */
+body.dark-mode {
+  --background-image: var(--Dark-Gradient);
+  --background-color-card: var(--Neutral-700);
+  --filter-btn-text: var(--Neutral-0);
+  color: var(--Neutral-0);
+  --toggle-label-color-1: var(--Red-500);
+  --toggle-label-color-2: var(--Neutral-600);
+  --card-description-color: var(--Neutral-300);
+  --remove-btn-color: var(--Neutral-100);
+  --hover-color: var(--Neutral-900);
+  --hover-color-2: var(--Neutral-300);
+  --focus-color: var(--Red-400);
+  --background-color-header: var(--Neutral-800);
+  --focus-color: var(--Neutral-900);
+}
+
+/* Header */
+.main-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--Neutral-800);
+  padding: 0.6rem 0.8rem;
+  border-radius: 15px;
+}
+
+/* Theme Toggle */
+.theme-toggle {
+  display: flex;
+  flex-direction: row;
+  padding: 0.8rem;
+  background-color: var(--Neutral-700);
+  border-radius: 10px;
+  transition: 0.3s;
+}
+
+.theme-toggle:focus {
+  outline-color: var(--Red-500);
+  outline-style: solid;
+  outline-width: thin;
+  border: 2px solid var(--Neutral-900);
+  outline-offset: 2px;
+  background-color: var(--Neutral-600);
+}
+
+.dark-mode .theme-toggle .moon-icon {
+  display: none;
+}
+
+.dark-mode .logo-text,
+.dark-mode .logo-icon {
+  fill: var(--filter-btn-text);
+}
+
+.dark-mode .logo-icon {
+  fill: var(--Red-400);
+}
+
+/* Filter Section */
+.filter-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-top: 2em;
+}
+
+.filter-section p {
+  color: var(--Neutral-0);
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.filter-buttons {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin: 1em 0;
+}
+
+.btn {
+  border: none;
+  height: 40px;
+  font-size: 1.2rem;
+}
+
+.btn.active-tab {
+  background-color: var(--Red-400) !important;
+  color: var(--Neutral-900) !important;
+}
+
+.filter-all,
+.filter-active,
+.filter-inactive {
+  color: var(--Neutral-100);
+  background-color: var(--Neutral-700);
+  border: 1.2px solid var(--Neutral-600);
+}
+
+.filter-all {
+  width: 55px;
+  border-radius: 200px;
+}
+
+.filter-active {
+  width: 88px;
+  border-radius: 100px;
+}
+
+.filter-inactive {
+  width: 97px;
+  border-radius: 100px;
+}
+
+.filter-all:hover,
+.filter-active:hover,
+.filter-inactive:hover,
+.theme-toggle:hover {
+  background-color: var(--Neutral-600);
+  cursor: pointer;
+}
+
+.filter-all:focus,
+.filter-active:focus,
+.filter-inactive:focus {
+  outline-color: var(--Red-500);
+  outline-style: solid;
+  outline-width: thin;
+  border: 2px solid var(--Neutral-900);
+  outline-offset: 2px;
+  background-color: var(--Neutral-600);
+  transition: 0.3s;
+}
+
+/* Extensions List */
+.extensions-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.7em;
+  margin-top: 0.7em;
+}
+
+.extensions-list.is-empty {
+  display: none;
+}
+
+@media (min-width: 700px) {
+  .extensions-list {
+    display: grid;
+    grid-template-columns: auto auto;
+  }
+
+  .filter-section {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}
+
+@media (min-width: 900px) {
+  body {
+    padding: 2em 1em 5em;
+  }
+
+  .card {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .filter-section {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .card-title {
+    font-size: 0.9rem;
+  }
+
+  .card-description {
+    font-size: 0.76rem;
+  }
+
+  .extensions-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-auto-rows: 1fr;
+  }
+
+  .card-footer.footer-5,
+  .card-footer.footer-9,
+  .card-footer.footer-10,
+  .card-footer.footer-11 {
+    padding-top: 2.2em;
+  }
+
+  .card-description.des-7 {
+    padding-right: 0;
+  }
+}
+
+@media screen and (min-width: 941px) {
+  body {
+    padding-left: 7em;
+    padding-right: 7em;
+  }
+
+  .filter-section {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .extensions-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-auto-rows: auto;
+  }
+
+  .card-title {
+    font-size: 1.1rem;
+  }
+
+  .card-description {
+    font-size: 0.94rem;
+  }
+
+  .card-footer {
+    padding-top: 2.8em;
+  }
+}

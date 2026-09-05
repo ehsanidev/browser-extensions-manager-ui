@@ -1,101 +1,353 @@
-# Frontend Mentor - Browser extensions manager UI
+# 🧩 مدیریت افزونه‌های مرورگر
 
-![Design preview for the Browser extensions manager UI coding challenge](./preview.jpg)
+> یک رابط کاربری مدرن و واکنش‌گرا برای مدیریت افزونه‌های مرورگر
 
-## Welcome! 👋
+---
 
-Thanks for checking out this front-end coding challenge.
+## 🇮🇷 فارسی
 
-[Frontend Mentor](https://www.frontendmentor.io) challenges help you improve your coding skills by building realistic projects.
+### 📋 معرفی پروژه
 
-**To do this challenge, you need a basic understanding of HTML, CSS and JavaScript.**
+این پروژه یک **رابط کاربری مدیریت افزونه‌های مرورگر** است که با استفاده از **React**، **TypeScript** و **Tailwind CSS** ساخته شده. امکاناتی مانند فیلتر کردن، تغییر وضعیت، حذف افزونه و تم تاریک/روشن را به صورت تعاملی و زیبا ارائه میده.
 
-## The challenge
+> **🙏 توجه:** اصل طرح رابط کاربری از وبسایت **[Frontend Mentor](https://www.frontendmentor.io)** الهام گرفته شده و این پروژه به عنوان یک **چالش و تمرین** برای بهبود مهارت‌های توسعه frontend پیاده‌سازی شده است.
 
-Your challenge is to build out this browser extension manager UI and get it looking as close to the design as possible.
+---
 
-You can use any tools you like to help you complete the challenge. So if you've got something you'd like to practice, feel free to give it a go.
+### ✨ ویژگی‌ها
 
-We provide the data for the extensions in a local `data.json` file. So you can use that to add the data dynamically if you choose.
+- ✅ **مدیریت افزونه‌ها** – نمایش لیست افزونه‌ها با وضعیت فعال/غیرفعال
+- 🔍 **فیلتراسیون** – فیلتر بر اساس وضعیت (همه، فعال، غیرفعال)
+- 🔄 **تغییر وضعیت** – فعال/غیرفعال کردن هر افزونه با یک کلیک
+- 🗑️ **حذف افزونه** – امکان حذف افزونه‌ها از لیست
+- 🌙 **حالت تاریک/روشن** – پشتیبانی از تم تاریک و روشن با قابلیت تغییر
+- 📱 **طراحی واکنش‌گرا** – سازگار با نمایشگرهای مختلف (دسکتاپ، تبلت، موبایل)
+- ✨ **انیمیشن‌های نرم** – تجربه کاربری روان با transitions و hover effects
 
-Your users should be able to: 
+---
 
-- Toggle extensions between active and inactive states
-- Filter active and inactive extensions
-- Remove extensions from the list
-- Select their color theme
-- View the optimal layout for the interface depending on their device's screen size
-- See hover and focus states for all interactive elements on the page
+### 🛠️ تکنولوژی‌ها
 
-Want some support on the challenge? [Join our community](https://www.frontendmentor.io/community) and ask questions in the **#help** channel.
+| ابزار | توضیحات |
+|-------|---------|
+| <img src="https://skillicons.dev/icons?i=react" width="20" /> **React 19** | کتابخانه اصلی برای ساخت رابط کاربری |
+| <img src="https://skillicons.dev/icons?i=ts" width="20" /> **TypeScript** | برای نوع‌دهی قوی و کد امن‌تر |
+| <img src="https://skillicons.dev/icons?i=tailwind" width="20" /> **Tailwind CSS 4** | استایل‌دهی مدرن و سریع |
+| <img src="https://skillicons.dev/icons?i=vite" width="20" /> **Vite** | ابزار ساخت سریع و مدرن |
+| <img src="https://skillicons.dev/icons?i=pnpm" width="20" /> **pnpm** | مدیریت بسته‌های کارآمد |
 
-## Where to find everything
+---
 
-Your task is to build out the project to the designs inside the `/design` folder. You will find both a mobile and a desktop version of the design. 
+### 📁 ساختار پروژه
 
-The designs are in JPG static format. Using JPGs will mean that you'll need to use your best judgment for styles such as `font-size`, `padding` and `margin`. 
+```
+browser-extensions-manager-ui/
+├── src/
+│   ├── App.tsx          # 🧩 کامپوننت اصلی برنامه
+│   ├── main.tsx         # 🚀 نقطه ورود برنامه
+│   ├── index.css        # 🎨 استایل‌های اصلی و Tailwind
+│   ├── types.ts         # 📝 تعاریف تایپ‌های TypeScript
+│   └── data.json        # 📦 داده‌های نمونه افزونه‌ها
+├── index.html           # 🌐 فایل HTML اصلی
+├── vite.config.ts       # ⚙️ پیکربندی Vite
+├── tsconfig.json        # ⚙️ پیکربندی TypeScript
+├── package.json         # 📦 وابستگی‌ها و اسکریپت‌ها
+└── README.md            # 📖 این فایل
+```
 
-If you would like the Figma design file to gain experience using professional tools and build more accurate projects faster, you can [subscribe as a PRO member](https://www.frontendmentor.io/pro).
+---
 
-All the required assets for this project are in the `/assets` folder. The images are already exported for the correct screen size and optimized.
+### 📦 نصب و راه‌اندازی
 
-We also include variable and static font files for the required fonts for this project. You can choose to either link to Google Fonts or use the local font files to host the fonts yourself. Note that we've removed the static font files for the font weights that aren't needed for this project.
+#### پیش‌نیازها
 
-There is also a `style-guide.md` file containing the information you'll need, such as color palette and fonts.
+- <img src="https://skillicons.dev/icons?i=nodejs" width="18" /> Node.js (نسخه 18 یا بالاتر)
+- <img src="https://skillicons.dev/icons?i=pnpm" width="18" /> pnpm (توصیه شده) یا npm
 
-## Building your project
+#### مراحل نصب
 
-Feel free to use any workflow that you feel comfortable with. Below is a suggested process, but do not feel like you need to follow these steps:
+1. کلون کردن مخزن:
+```bash
+git clone <repository-url>
+cd browser-extensions-manager-ui
+```
 
-1. Initialize your project as a public repository on [GitHub](https://github.com/). Creating a repo will make it easier to share your code with the community if you need help. If you're not sure how to do this, [have a read-through of this Try Git resource](https://try.github.io/).
-2. Configure your repository to publish your code to a web address. This will also be useful if you need some help during a challenge as you can share the URL for your project with your repo URL. There are a number of ways to do this, and we provide some recommendations below.
-3. Look through the designs to start planning out how you'll tackle the project. This step is crucial to help you think ahead for CSS classes to create reusable styles.
-4. Before adding any styles, structure your content with HTML. Writing your HTML first can help focus your attention on creating well-structured content.
-5. Write out the base styles for your project, including general content styles, such as `font-family` and `font-size`.
-6. Start adding styles to the top of the page and work down. Only move on to the next section once you're happy you've completed the area you're working on.
+2. نصب وابستگی‌ها:
+```bash
+pnpm install
+# یا
+npm install
+```
 
-## Deploying your project
+3. اجرا در حالت توسعه:
+```bash
+pnpm dev
+# یا
+npm run dev
+```
 
-As mentioned above, there are many ways to host your project for free. Our recommend hosts are:
+4. ساخت برای تولید:
+```bash
+pnpm build
+# یا
+npm run build
+```
 
-- [GitHub Pages](https://pages.github.com/)
-- [Vercel](https://vercel.com/)
-- [Netlify](https://www.netlify.com/)
+5. پیش‌نمایش نسخه ساخته شده:
+```bash
+pnpm preview
+# یا
+npm run preview
+```
 
-You can host your site using one of these solutions or any of our other trusted providers. [Read more about our recommended and trusted hosts](https://medium.com/frontend-mentor/frontend-mentor-trusted-hosting-providers-bf000dfebe).
+---
 
-## Create a custom `README.md`
+### 🎯 نحوه استفاده
 
-We strongly recommend overwriting this `README.md` with a custom one. We've provided a template inside the [`README-template.md`](./README-template.md) file in this starter code.
+#### مدیریت افزونه‌ها
 
-The template provides a guide for what to add. A custom `README` will help you explain your project and reflect on your learnings. Please feel free to edit our template as much as you like.
+- **🔄 تغییر وضعیت**: کلیک روی دکمه toggle (کلید گرد) برای فعال/غیرفعال کردن هر افزونه
+- **🗑️ حذف افزونه**: کلیک روی دکمه ✕ (ضربدر) در گوشه بالای هر کارت
+- **🔍 فیلتر کردن**: استفاده از دکمه‌های فیلتر (`All`، `Active`، `Inactive`) برای نمایش افزونه‌های خاص
 
-Once you've added your information to the template, delete this file and rename the `README-template.md` file to `README.md`. That will make it show up as your repository's README file.
+#### تغییر تم
 
-## Submitting your solution
+- 🌙 کلیک روی دکمه آیکون خورشید/ماه در header برای تغییر بین حالت روشن و تاریک
 
-Submit your solution on the platform for the rest of the community to see. Follow our ["Complete guide to submitting solutions"](https://medium.com/frontend-mentor/a-complete-guide-to-submitting-solutions-on-frontend-mentor-ac6384162248) for tips on how to do this.
+---
 
-Remember, if you're looking for feedback on your solution, be sure to ask questions when submitting it. The more specific and detailed you are with your questions, the higher the chance you'll get valuable feedback from the community.
+### 📊 ساختار داده
 
-## Sharing your solution
+داده‌های افزونه‌ها در فایل `src/data.json` با ساختار زیر ذخیره می‌شوند:
 
-There are multiple places you can share your solution:
+```json
+{
+  "logo": "./assets/images/logo-name.svg",
+  "name": "نام افزونه",
+  "description": "توضیحات افزونه",
+  "isActive": true
+}
+```
 
-1. Share your solution page in the **#finished-projects** channel of our [community](https://www.frontendmentor.io/community). 
-2. Tweet [@frontendmentor](https://twitter.com/frontendmentor) and mention **@frontendmentor**, including the repo and live URLs in the tweet. We'd love to take a look at what you've built and help share it around.
-3. Share your solution on other social channels like LinkedIn.
-4. Blog about your experience building your project. Writing about your workflow, technical choices, and talking through your code is a brilliant way to reinforce what you've learned. Great platforms to write on are [dev.to](https://dev.to/), [Hashnode](https://hashnode.com/), and [CodeNewbie](https://community.codenewbie.org/).
+---
 
-We provide templates to help you share your solution once you've submitted it on the platform. Please do edit them and include specific questions when you're looking for feedback. 
+### 🎨 طراحی
 
-The more specific you are with your questions the more likely it is that another member of the community will give you feedback.
+- **🔤 فونت**: Noto Sans از Google Fonts
+- **🎨 رنگ‌بندی**: پالت رنگی مدرن با پشتیبانی از تم تاریک
+- **🖼️ آیکون‌ها**: SVGهای سفارشی برای دکمه‌ها و کنترل‌ها
+- **💳 کارت‌ها**: طراحی کارتی با سایه و hover effect
 
-## Got feedback for us?
+---
 
-We love receiving feedback! We're always looking to improve our challenges and our platform. So if you have anything you'd like to mention, please email hi[at]frontendmentor[dot]io.
+### 📱 سازگاری
 
-This challenge is completely free. Please share it with anyone who will find it useful for practice.
+| دستگاه | تعداد ستون |
+|--------|-----------|
+| 🖥️ دسکتاپ | ۳ ستونه |
+| 📟 تبلت | ۲ ستونه |
+| 📱 موبایل | ۱ ستونه |
 
-**Have fun building!** 🚀
-# browser-extensions-manager-ui
+---
+
+### 🤝 مشارکت
+
+برای مشارکت در توسعه این پروژه:
+
+1. 🍴 Fork کنید
+2. 🌿 Branch جدید ایجاد کنید (`git checkout -b feature/amazing-feature`)
+3. 💾 Commit کنید (`git commit -m 'Add some amazing feature'`)
+4. 📤 Push کنید (`git push origin feature/amazing-feature`)
+5. 🔃 Pull Request باز کنید
+
+---
+
+### 📄 مجوز
+
+این پروژه تحت مجوز **MIT** منتشر شده است.
+
+---
+
+**❤️ توسعه‌یافته با عشق و React**
+
+---
+
+---
+
+## 🇬🇧 English
+
+# 🧩 Browser Extensions Manager UI
+
+> A modern and responsive user interface for managing browser extensions
+
+---
+
+### 📋 Overview
+
+This project is a **Browser Extensions Manager UI** built with **React**, **TypeScript**, and **Tailwind CSS**. It provides interactive features like filtering, toggling status, deleting extensions, and dark/light theme support in a beautiful and responsive interface.
+
+> **🙏 Note:** The original UI design is inspired by **[Frontend Mentor](https://www.frontendmentor.io)** and this project has been implemented as a **challenge and practice** to improve frontend development skills.
+
+---
+
+### ✨ Features
+
+- ✅ **Extension Management** – Display list of extensions with active/inactive status
+- 🔍 **Filtering** – Filter by status (All, Active, Inactive)
+- 🔄 **Toggle Status** – Activate/deactivate any extension with a single click
+- 🗑️ **Delete Extension** – Remove extensions from the list
+- 🌙 **Dark/Light Mode** – Support for dark and light themes with toggle capability
+- 📱 **Responsive Design** – Compatible with various screen sizes (desktop, tablet, mobile)
+- ✨ **Smooth Animations** – Pleasant user experience with transitions and hover effects
+
+---
+
+### 🛠️ Technologies
+
+| Tool | Description |
+|------|-------------|
+| <img src="https://skillicons.dev/icons?i=react" width="20" /> **React 19** | Main library for building the UI |
+| <img src="https://skillicons.dev/icons?i=ts" width="20" /> **TypeScript** | Strong typing and safer code |
+| <img src="https://skillicons.dev/icons?i=tailwind" width="20" /> **Tailwind CSS 4** | Modern and fast styling |
+| <img src="https://skillicons.dev/icons?i=vite" width="20" /> **Vite** | Fast and modern build tool |
+| <img src="https://skillicons.dev/icons?i=pnpm" width="20" /> **pnpm** | Efficient package management |
+
+---
+
+### 📁 Project Structure
+
+```
+browser-extensions-manager-ui/
+├── src/
+│   ├── App.tsx          # 🧩 Main application component
+│   ├── main.tsx         # 🚀 Application entry point
+│   ├── index.css        # 🎨 Main styles and Tailwind
+│   ├── types.ts         # 📝 TypeScript type definitions
+│   └── data.json        # 📦 Sample extension data
+├── index.html           # 🌐 Main HTML file
+├── vite.config.ts       # ⚙️ Vite configuration
+├── tsconfig.json        # ⚙️ TypeScript configuration
+├── package.json         # 📦 Dependencies and scripts
+└── README.md            # 📖 This file
+```
+
+---
+
+### 📦 Installation & Setup
+
+#### Prerequisites
+
+- <img src="https://skillicons.dev/icons?i=nodejs" width="18" /> Node.js (version 18 or higher)
+- <img src="https://skillicons.dev/icons?i=pnpm" width="18" /> pnpm (recommended) or npm
+
+#### Installation Steps
+
+1. Clone the repository:
+```bash
+git clone <repository-url>
+cd browser-extensions-manager-ui
+```
+
+2. Install dependencies:
+```bash
+pnpm install
+# or
+npm install
+```
+
+3. Run in development mode:
+```bash
+pnpm dev
+# or
+npm run dev
+```
+
+4. Build for production:
+```bash
+pnpm build
+# or
+npm run build
+```
+
+5. Preview the built version:
+```bash
+pnpm preview
+# or
+npm run preview
+```
+
+---
+
+### 🎯 How to Use
+
+#### Managing Extensions
+
+- **🔄 Toggle Status**: Click the toggle switch (round button) to activate/deactivate any extension
+- **🗑️ Delete Extension**: Click the ✕ (cross) button in the top-right corner of each card
+- **🔍 Filter**: Use the filter buttons (`All`, `Active`, `Inactive`) to display specific extensions
+
+#### Changing Theme
+
+- 🌙 Click the sun/moon icon button in the header to switch between light and dark modes
+
+---
+
+### 📊 Data Structure
+
+Extension data is stored in `src/data.json` with the following structure:
+
+```json
+{
+  "logo": "./assets/images/logo-name.svg",
+  "name": "Extension Name",
+  "description": "Extension description",
+  "isActive": true
+}
+```
+
+---
+
+### 🎨 Design
+
+- **🔤 Font**: Noto Sans from Google Fonts
+- **🎨 Color Palette**: Modern color scheme with dark theme support
+- **🖼️ Icons**: Custom SVG icons for buttons and controls
+- **💳 Cards**: Card-based design with shadows and hover effects
+
+---
+
+### 📱 Responsiveness
+
+| Device | Columns |
+|--------|---------|
+| 🖥️ Desktop | 3 columns |
+| 📟 Tablet | 2 columns |
+| 📱 Mobile | 1 column |
+
+---
+
+### 🤝 Contributing
+
+To contribute to this project:
+
+1. 🍴 Fork the repository
+2. 🌿 Create a new branch (`git checkout -b feature/amazing-feature`)
+3. 💾 Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. 📤 Push to the branch (`git push origin feature/amazing-feature`)
+5. 🔃 Open a Pull Request
+
+---
+
+### 📄 License
+
+This project is licensed under the **MIT** License.
+
+---
+
+**❤️ Built with love and React**
+
+---
+
+<div align="center">
+  <sub>Made with ❤️ by the developer</sub>
+</div>

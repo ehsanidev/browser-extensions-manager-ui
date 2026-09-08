@@ -15,7 +15,7 @@ const INITIAL_EXTENSIONS: Extension[] = data.map((item, index) => ({
 function SunIcon() {
   return (
     <img 
-      src="./assets/images/icon-sun.svg" 
+      src="./public/images/icon-sun.svg" 
       alt="Sun icon" 
       width="20" 
       height="20" 
@@ -26,7 +26,7 @@ function SunIcon() {
 function MoonIcon() {
   return (
     <img 
-      src="./assets/images/icon-moon.svg" 
+      src="./public/images/icon-moon.svg" 
       alt="Moon icon" 
       width="20" 
       height="20" 

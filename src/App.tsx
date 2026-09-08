@@ -1,6 +1,7 @@
 import { useState } from "react";
 import data from "./data.json";
 import type { Extension, Filter } from "./types";
+import Logo from "./components/Logo"
 
 // تبدیل داده‌ها با id
 const INITIAL_EXTENSIONS: Extension[] = data.map((item, index) => ({
@@ -13,25 +14,23 @@ const INITIAL_EXTENSIONS: Extension[] = data.map((item, index) => ({
 
 function SunIcon() {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <circle cx="12" cy="12" r="5" />
-      <line x1="12" y1="1" x2="12" y2="3" />
-      <line x1="12" y1="21" x2="12" y2="23" />
-      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
-      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
-      <line x1="1" y1="12" x2="3" y2="12" />
-      <line x1="21" y1="12" x2="23" y2="12" />
-      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
-      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
-    </svg>
+    <img 
+      src="./public/images/icon-sun.svg" 
+      alt="Sun icon" 
+      width="20" 
+      height="20" 
+    />
   );
 }
 
 function MoonIcon() {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
-    </svg>
+    <img 
+      src="./public/images/icon-moon.svg" 
+      alt="Moon icon" 
+      width="20" 
+      height="20" 
+    />
   );
 }
 
@@ -48,7 +47,7 @@ function ToggleSwitch({ active, onChange }: { active: boolean; onChange: () => v
   return (
     <button
       className="toggle-switch"
-      style={{ backgroundColor: active ? "hsl(213, 100%, 55%)" : "hsl(0, 0%, 78%)" }}
+      style={{ backgroundColor: active ? "hsl(3, 86%, 64%)" : "hsl(0, 0%, 78%)" }}
       onClick={onChange}
       aria-label={active ? "Deactivate extension" : "Activate extension"}
       aria-pressed={active}
@@ -114,15 +113,13 @@ function ExtensionCard({
       </button>
 
       <div
-        className="w-12 h-12 rounded-full flex items-center justify-center text-2xl flex-shrink-0"
+        className="w-12 h-12 flex items-center justify-center text-2xl flex-shrink-0"
         style={{ 
-          backgroundColor: color + "22", 
-          border: `2px solid ${color}33`,
           overflow: "hidden"
         }}
       >
         {ext.logo ? (
-          <img src={ext.logo} alt={ext.name} className="w-8 h-8 object-contain" />
+          <img src={ext.logo} alt={ext.name} className="w-auto h-auto object-contain" />
         ) : (
           <span>📦</span>
         )}
@@ -196,46 +193,49 @@ export default function App() {
       style={{ backgroundColor: bg, fontFamily: "'Noto Sans', sans-serif" }}
     >
       <header
-        className="sticky top-0 z-10 backdrop-blur-sm"
+        className="sticky z-10 backdrop-blur-sm"
         style={{
           backgroundColor: dark ? "hsl(227, 75%, 14%, 0.95)" : "hsl(200, 60%, 99%, 0.95)",
-          borderBottom: `1px solid ${headerBorder}`,
         }}
       >
         <div
-          className="flex items-center justify-between"
-          style={{
-            maxWidth: "1440px",
-            margin: "0 auto",
-            padding: "20px 120px",
+        style={{
+            maxWidth: "100%",
+            padding: "clamp(15px, 4vw, 50px) 0 0 0",
+            margin: "0 clamp(15px, 7vw, 150px) 0 clamp(15px, 7vw, 150px)",
           }}
-        >
-          <h1
-            className="font-bold"
-            style={{ color: textMain, fontSize: "28px", fontWeight: 700, lineHeight: 1.2 }}
           >
-            Browser Extensions Manager
-          </h1>
-          <button
-            className="flex items-center justify-center w-10 h-10 rounded-xl transition-colors duration-200"
+            <div
+            className="flex items-center justify-between"
             style={{
-              backgroundColor: themeBtn,
-              border: `1px solid ${themeBtnBorder}`,
-              color: textSub,
-              boxShadow: dark ? "none" : "0 1px 3px rgba(0,0,0,0.07)",
+              maxWidth: "1440px",
+              border: `1px solid ${headerBorder}`,   
+              borderRadius: "10px",
+              padding: "15px 15px",
             }}
-            onClick={() => setDark((d) => !d)}
-            aria-label="Toggle theme"
           >
-            {dark ? <SunIcon /> : <MoonIcon />}
-          </button>
+            <Logo color={dark ? "#ffffff" : "#091540"} />
+            <button
+              className="flex items-center justify-center w-10 h-10 rounded-xl transition-colors duration-200"
+              style={{
+                backgroundColor: themeBtn,
+                border: `1px solid ${themeBtnBorder}`,
+                color: textSub,
+                boxShadow: dark ? "none" : "0 1px 3px rgba(0,0,0,0.07)",
+              }}
+              onClick={() => setDark((d) => !d)}
+              aria-label="Toggle theme"
+            >
+              {dark ? <SunIcon /> : <MoonIcon />}
+            </button>
+          </div>
         </div>
       </header>
 
       <main
         style={{
           maxWidth: "1440px",
-          margin: "0 auto",
+          margin: "0 clamp(15px, 7vw, 10px) 0 clamp(15px, 7vw, 10px)",
           padding: "40px 120px 80px",
         }}
         className="responsive-main"
@@ -249,15 +249,15 @@ export default function App() {
                 className="filter-btn px-5 py-2.5 rounded-xl text-sm font-medium"
                 style={{
                   backgroundColor: isActive
-                    ? "hsl(213, 100%, 55%)"
+                    ? "hsl(3, 86%, 64%)"
                     : dark ? "hsl(226, 25%, 20%)" : "#ffffff",
                   color: isActive
                     ? "#ffffff"
                     : dark ? "hsl(0, 0%, 78%)" : "hsl(226, 11%, 37%)",
                   border: isActive
-                    ? "1px solid hsl(213, 100%, 55%)"
-                    : dark ? "1px solid hsl(226, 25%, 26%)" : "1px solid hsl(220, 13%, 88%)",
-                  boxShadow: isActive ? "0 2px 8px hsl(213, 100%, 55%, 0.3)" : "none",
+                    ? "1px solid hsl(3, 77%, 44%)"
+                    : dark ? "1px solid hsl(3, 71%, 56%)" : "1px solid hsl(3, 71%, 56%)",
+                  boxShadow: isActive ? "0 2px 8px hsl(3, 71%, 56%)" : "none",
                   fontWeight: isActive ? 700 : 500,
                   fontSize: "14px",
                 }}

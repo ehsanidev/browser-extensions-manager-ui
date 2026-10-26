@@ -42,36 +42,35 @@ body.light {
   --button-text: #ffffff;
 }
 
-* {
-  box-sizing: border-box;
-}
+* { box-sizing: border-box; }
 
-html {
-  scroll-behavior: smooth;
-}
+html { scroll-behavior: smooth; }
 
 body {
   margin: 0;
   min-height: 100vh;
   font-family: "Rajdhani", sans-serif;
-  background:
-    radial-gradient(circle at top, #122447 0%, var(--bg) 42%, var(--bg) 100%);
+  background: radial-gradient(circle at top, #122447 0%, var(--bg) 42%, var(--bg) 100%);
   color: var(--text);
   transition: background 0.25s ease, color 0.25s ease;
 }
 
 body.light {
-  background:
-    radial-gradient(circle at top, #dfeaff 0%, #edf5ff 42%, #edf5ff 100%);
+  background: radial-gradient(circle at top, #dfeaff 0%, #edf5ff 42%, #edf5ff 100%);
 }
 
-button,
-input {
+button, input {
   font: inherit;
 }
 
 button {
   cursor: pointer;
+}
+
+button:focus-visible,
+input:focus-visible {
+  outline: 3px solid rgba(26, 183, 255, 0.75);
+  outline-offset: 2px;
 }
 
 .page-shell {
@@ -204,9 +203,7 @@ body.light .game-card {
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(240, 246, 255, 0.96));
 }
 
-.hero-copy {
-  padding: 22px 18px;
-}
+.hero-copy { padding: 22px 18px; }
 
 .eyebrow {
   display: inline-block;
@@ -280,9 +277,7 @@ body.light .secondary-btn {
   font-size: 0.8rem;
 }
 
-.hero-panel {
-  padding: 16px;
-}
+.hero-panel { padding: 16px; }
 
 .arcade-display {
   background: linear-gradient(180deg, #0b1324, #09111d);
@@ -339,9 +334,7 @@ body.light .stat-card {
   background: rgba(92, 124, 255, 0.04);
 }
 
-.stat-card span {
-  font-size: 1.8rem;
-}
+.stat-card span { font-size: 1.8rem; }
 
 .stat-card strong {
   display: block;
@@ -500,13 +493,9 @@ body.light .game-area {
   color: var(--muted);
 }
 
-.empty-icon {
-  font-size: 4rem;
-}
+.empty-icon { font-size: 4rem; }
 
-.game-box {
-  width: 100%;
-}
+.game-box { width: 100%; }
 
 .game-block {
   display: flex;

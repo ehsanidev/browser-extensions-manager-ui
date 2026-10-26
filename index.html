@@ -2,12 +2,100 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Browser Extensions Manager</title>
+    <title>Sega Zone Arcade</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;800;900&family=Rajdhani:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/styles.css" />
   </head>
   <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
+    <div class="page-shell">
+      <header class="topbar">
+        <div class="brand">
+          <div class="brand-mark">SE</div>
+          <div class="brand-copy">
+            <span class="brand-tag">Arcade</span>
+            <h1>SEGA ZONE</h1>
+          </div>
+        </div>
+
+        <nav class="main-nav" aria-label="Main navigation">
+          <button class="nav-item active" type="button">Home</button>
+          <button class="nav-item" type="button">Action</button>
+          <button class="nav-item" type="button">Puzzle</button>
+          <button class="nav-item" type="button">Racing</button>
+          <button class="nav-item" type="button">Sports</button>
+        </nav>
+
+        <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle color mode">
+          ☀️
+        </button>
+      </header>
+
+      <main class="content">
+        <section class="hero">
+          <div class="hero-copy">
+            <span class="eyebrow">NEON ARCADE</span>
+            <h2>Play. Score. Repeat.</h2>
+            <p>
+              Dive into a retro game lounge packed with fast arcade action, brain puzzles,
+              racing challenges, and cool everyday mini-games.
+            </p>
+
+            <div class="hero-actions">
+              <button class="primary-btn" id="startBtn" type="button">Start Game</button>
+              <button class="secondary-btn" id="browseBtn" type="button">Browse</button>
+            </div>
+          </div>
+
+          <div class="hero-panel">
+            <div class="arcade-display">
+              <div class="display-label">TOP SCORE</div>
+              <div class="score">98,420</div>
+              <div class="score-sub">PLAYER ONE</div>
+            </div>
+            <div class="mini-stats">
+              <div class="stat-card">
+                <span>🚀</span>
+                <strong>120+</strong>
+                <small>Levels</small>
+              </div>
+              <div class="stat-card">
+                <span>🎮</span>
+                <strong>10</strong>
+                <small>Games</small>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="toolbar">
+          <div class="filters" id="filters"></div>
+          <button class="primary-btn small" id="randomGameBtn" type="button">Random</button>
+        </section>
+
+        <section class="games-grid" id="gamesGrid"></section>
+
+        <section class="game-panel">
+          <div class="panel-header">
+            <h3 id="panelTitle">Game Select</h3>
+            <span id="panelBadge">READY</span>
+          </div>
+
+          <div id="gameArea" class="game-area">
+            <div class="empty-state">
+              <div class="empty-icon">🎉</div>
+              <p>Select a game to start.</p>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script src="/script.js"></script>
   </body>
 </html>

@@ -114,6 +114,7 @@ const themeToggleBtn = document.getElementById("themeToggle");
 const randomGameBtn = document.getElementById("randomGameBtn");
 const startBtn = document.getElementById("startBtn");
 const browseBtn = document.getElementById("browseBtn");
+const navButtons = document.querySelectorAll(".nav-item");
 
 function renderFilters() {
   filtersEl.innerHTML = "";
@@ -125,7 +126,10 @@ function renderFilters() {
     btn.addEventListener("click", () => {
       selectedCategory = filter;
       renderFilters();
+      const filtered = games.filter((game) => filter === "All" ? true : game.category === filter);
+      activeGameId = filtered[0]?.id ?? null;
       renderGames();
+      if (filtered[0]) renderGamePanel(filtered[0]);
     });
     filtersEl.appendChild(btn);
   });
@@ -138,6 +142,11 @@ function renderGames() {
   });
 
   gamesGridEl.innerHTML = "";
+
+  if (!filteredGames.length) {
+    gamesGridEl.innerHTML = '<div class="empty-state"><p>No games found in this category.</p></div>';
+    return;
+  }
 
   filteredGames.forEach((game) => {
     const card = document.createElement("div");
@@ -161,6 +170,7 @@ function renderGames() {
 }
 
 function renderGamePanel(game) {
+  if (!game) return;
   panelTitleEl.textContent = game.name;
   panelBadgeEl.textContent = game.category;
 
@@ -200,6 +210,12 @@ function renderGamePanel(game) {
   }
 }
 
+function setButtonStatus(element, message, color = "#bed0f0") {
+  if (!element) return;
+  element.textContent = message;
+  element.style.color = color;
+}
+
 function renderSonicGame() {
   const a = Math.floor(Math.random() * 10) + 1;
   const b = Math.floor(Math.random() * 10) + 1;
@@ -221,19 +237,20 @@ function renderSonicGame() {
 
   const input = document.getElementById("sonicInput");
   const status = document.getElementById("sonicStatus");
-
-  document.getElementById("submitSonic").addEventListener("click", () => {
+  const handleSubmit = () => {
     const value = Number(input.value);
-
     if (value === answer) {
-      status.textContent = "Perfect run! Rings collected! 🏆";
-      status.style.color = "#50e3a4";
+      setButtonStatus(status, "Perfect run! Rings collected! 🏆", "#50e3a4");
       input.value = "";
-      renderSonicGame();
+      setTimeout(() => renderSonicGame(), 500);
     } else {
-      status.textContent = "Not quite — try again!";
-      status.style.color = "#ff5f73";
+      setButtonStatus(status, "Not quite — try again!", "#ff5f73");
     }
+  };
+
+  document.getElementById("submitSonic").addEventListener("click", handleSubmit);
+  input.addEventListener("keydown", (event) => {
+    if (event.key === "Enter") handleSubmit();
   });
 }
 
@@ -262,39 +279,34 @@ function renderMemoryGame() {
     board.appendChild(card);
 
     card.addEventListener("click", () => {
-      if (card.classList.contains("flipped") || card.classList.contains("matched")) {
-        return;
-      }
-
+      if (card.classList.contains("flipped") || card.classList.contains("matched")) return;
       card.textContent = emoji;
       card.classList.add("flipped");
 
       const flippedCards = document.querySelectorAll(".memory-card.flipped");
+      if (flippedCards.length !== 2) return;
 
-      if (flippedCards.length === 2) {
-        const [first, second] = [...flippedCards];
-
-        if (first.textContent === second.textContent) {
-          first.classList.add("matched");
-          second.classList.add("matched");
-          status.textContent = "Nice match! 🎉";
-        } else {
-          status.textContent = "No match — try again!";
-          setTimeout(() => {
-            first.textContent = "❔";
-            second.textContent = "❔";
-            first.classList.remove("flipped");
-            second.classList.remove("flipped");
-          }, 450);
-        }
-
+      const [first, second] = [...flippedCards];
+      if (first.textContent === second.textContent) {
+        first.classList.add("matched");
+        second.classList.add("matched");
+        setButtonStatus(status, "Nice match! 🎉", "#50e3a4");
+      } else {
+        setButtonStatus(status, "No match — try again!", "#ff5f73");
         setTimeout(() => {
-          const remaining = document.querySelectorAll(".memory-card.matched");
-          if (remaining.length === doubled.length / 2) {
-            status.textContent = "You won! All pairs matched! 🏆";
-          }
-        }, 250);
+          first.textContent = "❔";
+          second.textContent = "❔";
+          first.classList.remove("flipped");
+          second.classList.remove("flipped");
+        }, 450);
       }
+
+      setTimeout(() => {
+        const remaining = document.querySelectorAll(".memory-card.matched");
+        if (remaining.length === doubled.length / 2) {
+          setButtonStatus(status, "You won! All pairs matched! 🏆", "#50e3a4");
+        }
+      }, 260);
     });
   });
 }
@@ -320,18 +332,20 @@ function renderMathGame() {
 
   const input = document.getElementById("mathInput");
   const status = document.getElementById("mathStatus");
-
-  document.getElementById("submitMath").addEventListener("click", () => {
+  const handleSubmit = () => {
     const value = Number(input.value);
     if (value === answer) {
-      status.textContent = "Correct! Combo streak! ✨";
-      status.style.color = "#50e3a4";
+      setButtonStatus(status, "Correct! Combo streak! ✨", "#50e3a4");
       input.value = "";
-      renderMathGame();
+      setTimeout(() => renderMathGame(), 500);
     } else {
-      status.textContent = "Not quite — try again!";
-      status.style.color = "#ff5f73";
+      setButtonStatus(status, "Not quite — try again!", "#ff5f73");
     }
+  };
+
+  document.getElementById("submitMath").addEventListener("click", handleSubmit);
+  input.addEventListener("keydown", (event) => {
+    if (event.key === "Enter") handleSubmit();
   });
 }
 
@@ -356,20 +370,21 @@ function renderWordGame() {
   const input = document.getElementById("wordInput");
   const status = document.getElementById("wordStatus");
   const prompt = document.getElementById("wordPrompt");
-
-  document.getElementById("submitWord").addEventListener("click", () => {
+  const handleSubmit = () => {
     const guess = input.value.trim().toLowerCase();
-
     if (guess === currentWord) {
-      status.textContent = "You got it! ✅";
-      status.style.color = "#50e3a4";
+      setButtonStatus(status, "You got it! ✅", "#50e3a4");
       input.value = "";
       currentWord = words[Math.floor(Math.random() * words.length)];
       prompt.textContent = currentWord.split("").sort(() => Math.random() - 0.5).join("");
     } else {
-      status.textContent = "Not quite — try another word.";
-      status.style.color = "#ff5f73";
+      setButtonStatus(status, "Not quite — try another word.", "#ff5f73");
     }
+  };
+
+  document.getElementById("submitWord").addEventListener("click", handleSubmit);
+  input.addEventListener("keydown", (event) => {
+    if (event.key === "Enter") handleSubmit();
   });
 }
 
@@ -382,7 +397,9 @@ function renderRaceGame() {
   ];
 
   const randomRoute = routes[Math.floor(Math.random() * routes.length)];
-  const options = routes.filter((route) => route !== randomRoute);
+  const options = routes.filter((route) => route !== randomRoute).slice(0, 2);
+  const choices = [randomRoute, ...options];
+  choices.sort(() => Math.random() - 0.5);
 
   gameAreaEl.innerHTML = `
     <div class="game-box game-block">
@@ -391,26 +408,20 @@ function renderRaceGame() {
       </div>
       <div class="problem" style="font-size: clamp(1.35rem, 4vw, 2rem);">${randomRoute}</div>
       <div class="quick-quiz">
-        <button class="quiz-option" type="button">${randomRoute}</button>
-        <button class="quiz-option" type="button">${options[0]}</button>
-        <button class="quiz-option" type="button">${options[1]}</button>
+        ${choices.map((option) => `<button class="quiz-option" type="button">${option}</button>`).join("")}
       </div>
       <div id="raceStatus" class="status-line">Choose the correct route.</div>
     </div>
   `;
 
   const status = document.getElementById("raceStatus");
-
   document.querySelectorAll(".quiz-option").forEach((button) => {
     button.addEventListener("click", () => {
       const choice = button.textContent.trim();
-
       if (choice === randomRoute) {
-        status.textContent = "Perfect route! 🏁";
-        status.style.color = "#50e3a4";
+        setButtonStatus(status, "Perfect route! 🏁", "#50e3a4");
       } else {
-        status.textContent = "Wrong route. Try again!";
-        status.style.color = "#ff5f73";
+        setButtonStatus(status, "Wrong route. Try again!", "#ff5f73");
       }
     });
   });
@@ -441,18 +452,19 @@ function renderColorGame() {
 
   const input = document.getElementById("colorInput");
   const status = document.getElementById("colorStatus");
-
-  document.getElementById("submitColor").addEventListener("click", () => {
+  const handleSubmit = () => {
     const answer = input.value.trim().toLowerCase();
-
     if (answer === randomQ.a) {
-      status.textContent = "Correct! Great answer! 🌈";
-      status.style.color = "#50e3a4";
+      setButtonStatus(status, "Correct! Great answer! 🌈", "#50e3a4");
       input.value = "";
     } else {
-      status.textContent = "Wrong answer. Try again!";
-      status.style.color = "#ff5f73";
+      setButtonStatus(status, "Wrong answer. Try again!", "#ff5f73");
     }
+  };
+
+  document.getElementById("submitColor").addEventListener("click", handleSubmit);
+  input.addEventListener("keydown", (event) => {
+    if (event.key === "Enter") handleSubmit();
   });
 }
 
@@ -465,7 +477,8 @@ function renderMazeMission() {
   ];
 
   const randomPuzzle = puzzle[Math.floor(Math.random() * puzzle.length)];
-  const options = puzzle.filter((item) => item !== randomPuzzle);
+  const options = puzzle.filter((item) => item !== randomPuzzle).slice(0, 2);
+  const choices = [randomPuzzle, ...options].sort(() => Math.random() - 0.5);
 
   gameAreaEl.innerHTML = `
     <div class="game-box game-block">
@@ -474,26 +487,20 @@ function renderMazeMission() {
       </div>
       <div class="problem" style="font-size: clamp(1.35rem, 4vw, 2rem);">${randomPuzzle}</div>
       <div class="quick-quiz">
-        <button class="quiz-option" type="button">${randomPuzzle}</button>
-        <button class="quiz-option" type="button">${options[0]}</button>
-        <button class="quiz-option" type="button">${options[1]}</button>
+        ${choices.map((option) => `<button class="quiz-option" type="button">${option}</button>`).join("")}
       </div>
       <div id="mazeStatus" class="status-line">Choose the safest route.</div>
     </div>
   `;
 
   const status = document.getElementById("mazeStatus");
-
   document.querySelectorAll(".quiz-option").forEach((button) => {
     button.addEventListener("click", () => {
       const text = button.textContent.trim();
-
       if (text === randomPuzzle) {
-        status.textContent = "Correct path! 🧭";
-        status.style.color = "#50e3a4";
+        setButtonStatus(status, "Correct path! 🧭", "#50e3a4");
       } else {
-        status.textContent = "Oops! Try another route.";
-        status.style.color = "#ff5f73";
+        setButtonStatus(status, "Oops! Try another route.", "#ff5f73");
       }
     });
   });
@@ -501,9 +508,9 @@ function renderMazeMission() {
 
 function renderSkyFly() {
   const choices = ["Earth", "Mars", "Venus", "Jupiter", "Saturn"];
-
   const randomAnswer = choices[Math.floor(Math.random() * choices.length)];
-  const others = choices.filter((item) => item !== randomAnswer);
+  const others = choices.filter((item) => item !== randomAnswer).slice(0, 2);
+  const options = [randomAnswer, ...others].sort(() => Math.random() - 0.5);
 
   gameAreaEl.innerHTML = `
     <div class="game-box game-block">
@@ -512,26 +519,20 @@ function renderSkyFly() {
       </div>
       <div class="problem" style="font-size: clamp(1.4rem, 5vw, 2rem);">Which planet is ${randomAnswer}?</div>
       <div class="quick-quiz">
-        <button class="quiz-option" type="button">${randomAnswer}</button>
-        <button class="quiz-option" type="button">${others[0]}</button>
-        <button class="quiz-option" type="button">${others[1]}</button>
+        ${options.map((option) => `<button class="quiz-option" type="button">${option}</button>`).join("")}
       </div>
       <div id="flyStatus" class="status-line">Choose the correct planet.</div>
     </div>
   `;
 
   const status = document.getElementById("flyStatus");
-
   document.querySelectorAll(".quiz-option").forEach((button) => {
     button.addEventListener("click", () => {
       const answer = button.textContent.trim();
-
       if (answer === randomAnswer) {
-        status.textContent = "Correct! Nice one! 🚀";
-        status.style.color = "#50e3a4";
+        setButtonStatus(status, "Correct! Nice one! 🚀", "#50e3a4");
       } else {
-        status.textContent = "Not quite — try again!";
-        status.style.color = "#ff5f73";
+        setButtonStatus(status, "Not quite — try again!", "#ff5f73");
       }
     });
   });
@@ -561,18 +562,19 @@ function renderStoryGame() {
 
   const input = document.getElementById("storyInput");
   const status = document.getElementById("storyStatus");
-
-  document.getElementById("submitStory").addEventListener("click", () => {
+  const handleSubmit = () => {
     const answer = input.value.trim().toLowerCase();
-
     if (answer === randomStory.a.toLowerCase()) {
-      status.textContent = "Correct! Great reading! 📚";
-      status.style.color = "#50e3a4";
+      setButtonStatus(status, "Correct! Great reading! 📚", "#50e3a4");
       input.value = "";
     } else {
-      status.textContent = "Wrong answer. Try again!";
-      status.style.color = "#ff5f73";
+      setButtonStatus(status, "Wrong answer. Try again!", "#ff5f73");
     }
+  };
+
+  document.getElementById("submitStory").addEventListener("click", handleSubmit);
+  input.addEventListener("keydown", (event) => {
+    if (event.key === "Enter") handleSubmit();
   });
 }
 
@@ -594,10 +596,11 @@ function renderReactionGame() {
 
   const box = document.getElementById("reactionBox");
   const status = document.getElementById("reactionStatus");
+  box.style.background = "rgba(255, 255, 255, 0.05)";
 
   const setGreen = () => {
     box.textContent = "🟢";
-    status.textContent = "Click now!";
+    setButtonStatus(status, "Click now!", "#50e3a4");
     box.style.background = "rgba(80, 227, 164, 0.14)";
     isReady = true;
     startedAt = Date.now();
@@ -605,24 +608,26 @@ function renderReactionGame() {
 
   const handleClick = () => {
     if (!isReady) {
-      status.textContent = "Too soon! Wait for green.";
-      status.style.color = "#ff5f73";
+      setButtonStatus(status, "Too soon! Wait for green.", "#ff5f73");
       return;
     }
 
     const reactionTime = Date.now() - startedAt;
-    status.textContent = `Your reaction time: ${reactionTime}ms`;
-    status.style.color = "#50e3a4";
+    setButtonStatus(status, `Your reaction time: ${reactionTime}ms`, "#50e3a4");
     isReady = false;
     box.textContent = "⚪";
     box.style.background = "rgba(255, 255, 255, 0.05)";
   };
 
   box.addEventListener("click", handleClick);
+  setTimeout(() => setGreen(), 1200);
+}
 
-  setTimeout(() => {
-    setGreen();
-  }, 1200);
+function applyNavState() {
+  navButtons.forEach((button) => {
+    const isActive = button.dataset.category === selectedCategory;
+    button.classList.toggle("active", isActive);
+  });
 }
 
 function toggleTheme() {
@@ -631,12 +636,28 @@ function toggleTheme() {
   themeToggleBtn.textContent = isLight ? "☀️" : "🌙";
 }
 
+navButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    const nextCategory = button.dataset.category || "All";
+    selectedCategory = nextCategory;
+    applyNavState();
+    renderFilters();
+    const filtered = games.filter((game) => nextCategory === "All" ? true : game.category === nextCategory);
+    activeGameId = filtered[0]?.id ?? null;
+    renderGames();
+    if (filtered[0]) renderGamePanel(filtered[0]);
+  });
+});
+
 themeToggleBtn.addEventListener("click", toggleTheme);
 
 randomGameBtn.addEventListener("click", () => {
-  const randomIndex = Math.floor(Math.random() * games.length);
-  const selected = games[randomIndex];
+  const index = Math.floor(Math.random() * games.length);
+  const selected = games[index];
   activeGameId = selected.id;
+  selectedCategory = selected.category;
+  applyNavState();
+  renderFilters();
   renderGames();
   renderGamePanel(selected);
 });
@@ -644,6 +665,9 @@ randomGameBtn.addEventListener("click", () => {
 startBtn.addEventListener("click", () => {
   const firstGame = games[0];
   activeGameId = firstGame.id;
+  selectedCategory = "All";
+  applyNavState();
+  renderFilters();
   renderGames();
   renderGamePanel(firstGame);
 });
@@ -651,14 +675,18 @@ startBtn.addEventListener("click", () => {
 browseBtn.addEventListener("click", () => {
   const firstCategory = filters[1] || "Action";
   selectedCategory = firstCategory;
+  applyNavState();
   renderFilters();
+  const filtered = games.filter((game) => game.category === firstCategory);
+  activeGameId = filtered[0]?.id ?? null;
   renderGames();
-  const selected = games.find((game) => game.category === firstCategory);
-  if (selected) {
-    activeGameId = selected.id;
-    renderGamePanel(selected);
-  }
+  if (filtered[0]) renderGamePanel(filtered[0]);
 });
 
+applyNavState();
 renderFilters();
 renderGames();
+
+const initialGame = games[0];
+activeGameId = initialGame.id;
+renderGamePanel(initialGame);
